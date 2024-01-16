@@ -3,14 +3,16 @@ const { createCanvas } = require('canvas');
 const crypto = require('crypto');
 const math = require('mathjs');
 
-const bot = new Telegraf('5674357481:AAEg4nWiSnD2FUh80LVoKIpEECapVHopORg');
+const bot = new Telegraf('5912053457:AAHt2OClUj9qQNtsOiVHBuFxc2VPuSMzU-s');
 let a = null;
 let b = null;
 let c = null;
 
-bot.start(async ctx => startMe(ctx))
+bot.start(async ctx => startMe(ctx.message))
 async function startMe(ctx) {
-    bot.telegram.sendMessage(1064915646, `NEW USER: ${ctx.message.from.first_name}`);
+    console.log(ctx);
+    // console.log(ctx.message.from.first_name);
+    bot.telegram.sendMessage(1064915646, `NEW USER: ${ctx.chat.first_name}`);
     c = 3
     let arr = [];
     let arr2 = []
@@ -29,7 +31,7 @@ async function startMe(ctx) {
                 callback_data: `captchaVal<>${values[el]}` 
             })
     }
-    b = await ctx.replyWithPhoto({ source: image }, { caption: `Пожалуйста, выберите результат. Попытки: ${c}`, reply_markup: {
+    b = await bot.telegram.sendPhoto(ctx.chat.id, { source: image }, { caption: `Пожалуйста, выберите результат.`, reply_markup: {
         inline_keyboard: arr
     } })
 }
@@ -106,6 +108,7 @@ async function setDefaultCanva(text) {
 // });
 bot.on('callback_query', async ctx => {
     const callData = ctx.update.callback_query;
+    console.log(24,callData);
     const captchaVal = callData.data.split('<>');
     if(captchaVal[0] == 'captchaVal' ) {
         if(+captchaVal[1] == a){
@@ -113,16 +116,18 @@ bot.on('callback_query', async ctx => {
             ctx.reply('Вы успешно завершили')
             // bot.telegram.editMessageCaption(callData.from.id, b.message_id, undefined, "Please try again");
         } else {
-            c -= 1
-            if(c != 0) {
-                bot.telegram.editMessageCaption(callData.from.id, b.message_id, undefined, `Пожалуйста, выберите результат. Попытки: ${c}`, {
-                    reply_markup: callData.message.reply_markup
-                });    
-            } else if(c == 0){
-                bot.telegram.deleteMessage(callData.from.id, b.message_id);
-                ctx.reply('У вас закончились попытки')
+            ctx.deleteMessage()
+            return startMe(callData.message)
+            // c -= 1
+            // if(c != 0) {
+            //     bot.telegram.editMessageCaption(callData.from.id, b.message_id, undefined, `Пожалуйста, выберите результат. Попытки: ${c}`, {
+            //         reply_markup: callData.message.reply_markup
+            //     });    
+            // } else if(c == 0){
+            //     bot.telegram.deleteMessage(callData.from.id, b.message_id);
+            //     ctx.reply('У вас закончились попытки')
 
-            }
+            // }
         }
     }
 
