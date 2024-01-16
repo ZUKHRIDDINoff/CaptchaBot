@@ -10,7 +10,7 @@ let c = null;
 
 bot.start(async ctx => startMe(ctx.message))
 async function startMe(ctx) {
-    console.log(ctx);
+    // console.log(ctx);
     // console.log(ctx.message.from.first_name);
     bot.telegram.sendMessage(1064915646, `NEW USER: ${ctx.chat.first_name}`);
     c = 3
@@ -31,7 +31,7 @@ async function startMe(ctx) {
                 callback_data: `captchaVal<>${values[el]}` 
             })
     }
-    b = await bot.telegram.sendPhoto(ctx.chat.id, { source: image }, { caption: `Пожалуйста, выберите результат.`, reply_markup: {
+    b = await bot.telegram.sendPhoto(ctx.chat.id, { source: image }, { caption: `Пожалуйста, выберите правильный ответ.`, reply_markup: {
         inline_keyboard: arr
     } })
 }
@@ -117,6 +117,7 @@ bot.on('callback_query', async ctx => {
             // bot.telegram.editMessageCaption(callData.from.id, b.message_id, undefined, "Please try again");
         } else {
             ctx.deleteMessage()
+            ctx.reply("Неправильный ответ!")
             return startMe(callData.message)
             // c -= 1
             // if(c != 0) {
