@@ -5,10 +5,10 @@ const math = require('mathjs');
 
 const bot = new Telegraf('6965623131:AAFA4d8SOzFfQ2Ljbbh9wOLcV2EEu-mmD-g');
 if(bot.isPolling()) {
-    await bot.stopPolling();
-    }
+    bot.stopPolling();
+}
     
-    await bot.startPolling();
+ bot.startPolling();
 let a = null;
 let b = null;
 let c = null;
@@ -142,4 +142,4 @@ bot.launch();
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
 
-await bot.stopPolling();
+bot.stopPolling();
