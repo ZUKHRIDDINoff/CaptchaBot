@@ -2,13 +2,19 @@ const {Telegraf} = require('telegraf');
 const { createCanvas } = require('canvas');
 const crypto = require('crypto');
 const math = require('mathjs');
+const express = require('express')
+const app = express()
+const port = 3000
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 const bot = new Telegraf('6965623131:AAFA4d8SOzFfQ2Ljbbh9wOLcV2EEu-mmD-g');
-if(bot.isPolling()) {
-    bot.stopPolling();
-}
-    
- bot.startPolling();
+
 let a = null;
 let b = null;
 let c = null;
@@ -142,4 +148,3 @@ bot.launch();
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
 
-bot.stopPolling();
