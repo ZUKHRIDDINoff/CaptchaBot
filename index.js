@@ -108,7 +108,6 @@ async function setDefaultCanva(text) {
 // });
 bot.on('callback_query', async ctx => {
     const callData = ctx.update.callback_query;
-    console.log(24,callData);
     const captchaVal = callData.data.split('<>');
     if(captchaVal[0] == 'captchaVal' ) {
         if(+captchaVal[1] == a){
