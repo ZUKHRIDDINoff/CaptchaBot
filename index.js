@@ -3,7 +3,7 @@ const { createCanvas } = require('canvas');
 const crypto = require('crypto');
 const math = require('mathjs');
 
-const bot = new Telegraf('5912053457:AAHt2OClUj9qQNtsOiVHBuFxc2VPuSMzU-s');
+const bot = new Telegraf('6965623131:AAFA4d8SOzFfQ2Ljbbh9wOLcV2EEu-mmD-g');
 let a = null;
 let b = null;
 let c = null;
